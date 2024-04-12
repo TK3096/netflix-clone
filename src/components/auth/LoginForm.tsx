@@ -15,7 +15,7 @@ import {
   FormField,
   FormItem,
 } from '@/components/ui/form'
-import { FloatingInput } from '@/components/common/FloatingInput'
+import { FloatingInput } from '@/components/ui/FloatingInput'
 
 export const LoginForm = () => {
   const form = useForm({
