@@ -15,10 +15,18 @@ export const {
     signIn: '/auth/login',
   },
   callbacks: {
+    async session({ session, token }) {
+      if (session.user && token.sub) {
+        session.user.id = token.sub
+      }
+
+      return session
+    },
     async jwt({ token }) {
       return token
     },
   },
   adapter: PrismaAdapter(db),
+  session: { strategy: 'jwt' },
   ...authConfig,
 })

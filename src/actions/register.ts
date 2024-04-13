@@ -5,8 +5,7 @@ import bcrypt from 'bcryptjs'
 
 import { registerSchema } from '@/shcemas/auth'
 
-import { db } from '@/lib/db'
-import { getUserByEmail } from '@/lib/data/user'
+import { createUser, getUserByEmail } from '@/lib/data/user'
 
 export const register = async (data: z.infer<typeof registerSchema>) => {
   const validateFields = registerSchema.safeParse(data)
@@ -24,13 +23,15 @@ export const register = async (data: z.infer<typeof registerSchema>) => {
 
   const hashedPassword = await bcrypt.hash(password, 10)
 
-  await db.user.create({
-    data: {
-      name,
-      email,
-      hashedPassword,
-    },
+  const id = await createUser({
+    name,
+    email,
+    hashedPassword,
   })
+
+  if (!id) {
+    return { error: 'Failed to create user' }
+  }
 
   return { success: true }
 }

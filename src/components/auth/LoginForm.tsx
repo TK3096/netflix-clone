@@ -1,9 +1,12 @@
 'use client'
 
-import React from 'react'
+import React, { useTransition } from 'react'
 import * as zod from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useSearchParams } from 'next/navigation'
+
+import { login } from '@/actions/login'
 
 import { loginSchema } from '@/shcemas/auth'
 
@@ -18,6 +21,10 @@ import {
 import { FloatingInput } from '@/components/ui/FloatingInput'
 
 export const LoginForm = () => {
+  const searchParams = useSearchParams()
+
+  const [isPending, startTransition] = useTransition()
+
   const form = useForm({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -27,7 +34,18 @@ export const LoginForm = () => {
   })
 
   const handleSubmitForm = (data: zod.infer<typeof loginSchema>) => {
-    console.log(data)
+    startTransition(async () => {
+      try {
+        const calbackUrl = searchParams.get('callbackUrl') || undefined
+        const res = await login(data, calbackUrl)
+        // todo: handle error and success state
+        if (res?.error) {
+          console.log('error: ', res.error)
+        }
+      } catch (err) {
+        console.log('err: ', err)
+      }
+    })
   }
 
   return (

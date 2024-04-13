@@ -23,17 +23,21 @@ export default auth((req) => {
     return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl))
   }
 
-  let callbaclUrl = nextUrl.pathname
+  if (!isLoggedIn) {
+    let callbaclUrl = nextUrl.pathname
 
-  if (nextUrl.search) {
-    callbaclUrl += nextUrl.search
+    if (nextUrl.search) {
+      callbaclUrl += nextUrl.search
+    }
+
+    const encodedCallbackUrl = encodeURIComponent(callbaclUrl)
+
+    return Response.redirect(
+      new URL(`/auth/login?callbackUrl=${encodedCallbackUrl}`, nextUrl),
+    )
   }
 
-  const encodedCallbackUrl = encodeURIComponent(callbaclUrl)
-
-  return Response.redirect(
-    new URL(`/auth/login?callbackUrl=${encodedCallbackUrl}`, nextUrl),
-  )
+  return
 })
 
 export const config = {

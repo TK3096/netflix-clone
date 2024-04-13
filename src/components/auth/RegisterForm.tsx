@@ -8,7 +8,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 
 import { registerSchema } from '@/shcemas/auth'
 
-import { register } from '@/app/actions/register'
+import { register } from '@/actions/register'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -43,11 +43,11 @@ export const RegisterForm = () => {
         const res = await register(data)
 
         // todo: handle error and success state
-        if (res.error) {
+        if (res?.error) {
           console.log('error: ', res.error)
         }
 
-        if (res.success) {
+        if (res?.success) {
           form.reset()
 
           router.push(DEFAULT_LOGIN_REDIRECT)
