@@ -8,6 +8,7 @@ const LoginPage = () => {
       footerLabel='Dont have an account?'
       switchFormLabel='Create an account?'
       swithFormLink='/auth/register'
+      providers={['github']}
     >
       <LoginForm />
     </AuthWrapper>

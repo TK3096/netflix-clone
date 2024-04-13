@@ -5,9 +5,10 @@ const RegisterPage = () => {
   return (
     <AuthWrapper
       headerLabel='Sign up'
-      footerLabel='already have an account?'
-      switchFormLabel='Login'
+      footerLabel='Already have an account?'
+      switchFormLabel='Go to sign in'
       swithFormLink='/auth/login'
+      providers={['github']}
     >
       <RegisterForm />
     </AuthWrapper>

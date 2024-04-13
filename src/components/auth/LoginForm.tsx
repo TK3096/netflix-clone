@@ -25,6 +25,8 @@ export const LoginForm = () => {
 
   const [isPending, startTransition] = useTransition()
 
+  const calbackUrl = searchParams.get('callbackUrl') || undefined
+
   const form = useForm({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -36,7 +38,6 @@ export const LoginForm = () => {
   const handleSubmitForm = (data: zod.infer<typeof loginSchema>) => {
     startTransition(async () => {
       try {
-        const calbackUrl = searchParams.get('callbackUrl') || undefined
         const res = await login(data, calbackUrl)
         // todo: handle error and success state
         if (res?.error) {
@@ -53,9 +54,9 @@ export const LoginForm = () => {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(handleSubmitForm)}
-          className='space-y-4'
+          className='space-y-10'
         >
-          <div className='space-y-2'>
+          <div className='space-y-3'>
             <FormField
               name='email'
               control={form.control}
@@ -93,11 +94,10 @@ export const LoginForm = () => {
                 </FormItem>
               )}
             />
-
-            <Button variant='primary' className='w-full' type='submit'>
-              Login
-            </Button>
           </div>
+          <Button variant='primary' className='w-full' type='submit'>
+            Login
+          </Button>
         </form>
       </Form>
     </div>

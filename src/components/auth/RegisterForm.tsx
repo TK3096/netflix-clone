@@ -63,9 +63,9 @@ export const RegisterForm = () => {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(handleSubmitForm)}
-          className='space-y-4'
+          className='space-y-10'
         >
-          <div className='space-y-2'>
+          <div className='space-y-3'>
             <FormField
               name='name'
               control={form.control}
@@ -125,16 +125,15 @@ export const RegisterForm = () => {
                 </FormItem>
               )}
             />
-
-            <Button
-              variant='primary'
-              className='w-full'
-              type='submit'
-              disabled={loading}
-            >
-              Register
-            </Button>
           </div>
+          <Button
+            variant='primary'
+            className='w-full'
+            type='submit'
+            disabled={loading}
+          >
+            Register
+          </Button>
         </form>
       </Form>
     </div>
