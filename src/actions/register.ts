@@ -33,5 +33,5 @@ export const register = async (data: z.infer<typeof registerSchema>) => {
     return { error: 'Failed to create user' }
   }
 
-  return { success: true }
+  return { success: 'Successfuly register' }
 }

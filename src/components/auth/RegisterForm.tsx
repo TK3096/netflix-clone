@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useTransition } from 'react'
+import React, { useTransition, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import * as zod from 'zod'
 import { useForm } from 'react-hook-form'
@@ -19,10 +19,15 @@ import {
   FormItem,
 } from '@/components/ui/form'
 import { FloatingInput } from '@/components/ui/FloatingInput'
+import { FormError } from '@/components/ui/FormError'
+import { FormSuccess } from '@/components/ui/FormSuccess'
+
 import { DEFAULT_LOGIN_REDIRECT } from '@/routes'
 
 export const RegisterForm = () => {
   const [isPending, startTransition] = useTransition()
+  const [error, setError] = useState('')
+  const [success, setSuccess] = useState('')
 
   const router = useRouter()
 
@@ -38,22 +43,27 @@ export const RegisterForm = () => {
   const loading = isPending || form.formState.isSubmitting
 
   const handleSubmitForm = (data: zod.infer<typeof registerSchema>) => {
+    setError('')
+    setSuccess('')
+
     startTransition(async () => {
       try {
         const res = await register(data)
 
-        // todo: handle error and success state
         if (res?.error) {
-          console.log('error: ', res.error)
+          setError(res.error)
         }
 
         if (res?.success) {
           form.reset()
+          setSuccess(res.success)
 
-          router.push(DEFAULT_LOGIN_REDIRECT)
+          setTimeout(() => {
+            router.push(DEFAULT_LOGIN_REDIRECT)
+          }, 2000)
         }
       } catch (err) {
-        console.log('err: ', err)
+        setError('Something went wrong')
       }
     })
   }
@@ -126,14 +136,19 @@ export const RegisterForm = () => {
               )}
             />
           </div>
-          <Button
-            variant='primary'
-            className='w-full'
-            type='submit'
-            disabled={loading}
-          >
-            Register
-          </Button>
+
+          <div className='space-y-4'>
+            {success && <FormSuccess message={success} />}
+            {error && <FormError message={error} />}
+            <Button
+              variant='primary'
+              className='w-full'
+              type='submit'
+              disabled={loading}
+            >
+              Register
+            </Button>
+          </div>
         </form>
       </Form>
     </div>

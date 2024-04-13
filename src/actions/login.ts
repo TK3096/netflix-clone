@@ -45,7 +45,7 @@ export const login = async (
       redirectTo: callbackUrl || DEFAULT_LOGIN_REDIRECT,
     })
 
-    return { success: true }
+    return { success: 'Successful login' }
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {
