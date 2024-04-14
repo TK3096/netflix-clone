@@ -1,69 +1,15 @@
-const HomePage = () => {
-  return (
-    <div>
-      <div>Homepage</div>
-      <div>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias
-        explicabo autem sint accusantium necessitatibus maiores ex quibusdam
-        repellendus natus officia quia quae, laudantium cupiditate excepturi
-        odio modi culpa, eum ab.
-      </div>
-      <div>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias
-        explicabo autem sint accusantium necessitatibus maiores ex quibusdam
-        repellendus natus officia quia quae, laudantium cupiditate excepturi
-        odio modi culpa, eum ab.
-      </div>
-      <div>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias
-        explicabo autem sint accusantium necessitatibus maiores ex quibusdam
-        repellendus natus officia quia quae, laudantium cupiditate excepturi
-        odio modi culpa, eum ab.
-      </div>
-      <div>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias
-        explicabo autem sint accusantium necessitatibus maiores ex quibusdam
-        repellendus natus officia quia quae, laudantium cupiditate excepturi
-        odio modi culpa, eum ab.
-      </div>
-      <div>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias
-        explicabo autem sint accusantium necessitatibus maiores ex quibusdam
-        repellendus natus officia quia quae, laudantium cupiditate excepturi
-        odio modi culpa, eum ab.
-      </div>
-      <div>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias
-        explicabo autem sint accusantium necessitatibus maiores ex quibusdam
-        repellendus natus officia quia quae, laudantium cupiditate excepturi
-        odio modi culpa, eum ab.
-      </div>
-      <div>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias
-        explicabo autem sint accusantium necessitatibus maiores ex quibusdam
-        repellendus natus officia quia quae, laudantium cupiditate excepturi
-        odio modi culpa, eum ab.
-      </div>
-      <div>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias
-        explicabo autem sint accusantium necessitatibus maiores ex quibusdam
-        repellendus natus officia quia quae, laudantium cupiditate excepturi
-        odio modi culpa, eum ab.
-      </div>
-      <div>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias
-        explicabo autem sint accusantium necessitatibus maiores ex quibusdam
-        repellendus natus officia quia quae, laudantium cupiditate excepturi
-        odio modi culpa, eum ab.
-      </div>
-      <div>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias
-        explicabo autem sint accusantium necessitatibus maiores ex quibusdam
-        repellendus natus officia quia quae, laudantium cupiditate excepturi
-        odio modi culpa, eum ab.
-      </div>
-    </div>
-  )
+import { Movie } from '@prisma/client'
+
+import { Billboard } from '@/components/home/Billboard'
+
+import { getRandomMovie } from '@/lib/data/movice'
+
+const HomePage = async () => {
+  const movie = await getRandomMovie()
+
+  if (!movie) return null
+
+  return <Billboard movie={movie} />
 }
 
 export default HomePage

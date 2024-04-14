@@ -59,7 +59,7 @@ export const Navbar: React.FC = () => {
   return (
     <nav
       className={cn(
-        'px-5 md:px-10 lg:px-20 py-3 flex gap-4 items-center transition-colors duration-150 shadow-xl bg-neutral-900',
+        'px-5 md:px-10 lg:px-20 py-3 flex gap-4 items-center transition-colors duration-150',
         showBackground && 'bg-black',
       )}
     >
