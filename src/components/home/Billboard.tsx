@@ -23,7 +23,7 @@ export const Billboard: React.FC<BillboardProps> = (props: BillboardProps) => {
         autoPlay
         muted
       ></video>
-      <div className='absolute top-[40%] md:top-[30%] ml-4 md:ml-16'>
+      <div className='absolute top-[50%] md:top-[40%] ml-4 md:ml-16'>
         <p className='text-white text-xl md:text-5xl lg:text-6xl md:w-[50%] font-bold drop-shadow-xl'>
           {movie.title}
         </p>
