@@ -1,0 +1,14 @@
+import { Navbar } from '@/components/navigation/Navbar'
+
+const ProtectedLayout = ({ children }: { children: React.ReactNode }) => {
+  return (
+    <div className='h-full w-full'>
+      <div className='fixed w-full'>
+        <Navbar />
+      </div>
+      <main className='h-full pt-[65px]'>{children}</main>
+    </div>
+  )
+}
+
+export default ProtectedLayout

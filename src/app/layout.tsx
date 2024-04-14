@@ -26,9 +26,7 @@ export default async function RootLayout({
   return (
     <SessionProvider session={session}>
       <html lang='en'>
-        <body className={cn(font.className, 'bg-[#171719] text-white')}>
-          {children}
-        </body>
+        <body className={cn(font.className, 'dark')}>{children}</body>
       </html>
     </SessionProvider>
   )
