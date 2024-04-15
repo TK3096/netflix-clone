@@ -1,7 +1,4 @@
-'use client'
-
-import React, { useEffect, useState } from 'react'
-import { useRouter } from 'next/navigation'
+import React from 'react'
 import Image from 'next/image'
 
 import { cn } from '@/lib/utils'
@@ -9,70 +6,84 @@ import { cn } from '@/lib/utils'
 interface ProfileAvatarProps {
   name: string
   image?: string
-  size?: 'sm' | 'md'
+  size?: 'sm' | 'md' | 'lg'
+  onClick?: () => void
 }
 
 export const ProfileAvatar: React.FC<ProfileAvatarProps> = (
   props: ProfileAvatarProps,
 ) => {
-  const { name, size = 'md', image } = props
+  const { image, name, size = 'lg', onClick } = props
 
-  const router = useRouter()
+  let boxStyle = ''
+  let leftEyeStyle = ''
+  let rightEyeStyle = ''
+  let mouthStyle = ''
+  let hoverStyle = ''
 
-  const [mounted, setMounted] = useState(false)
-
-  const avatarSize = size === 'sm' ? 'w-[30px] h-[30px]' : 'w-[150px] h-[150px]'
-  const eyeSize = size === 'sm' ? 'w-1 h-1' : 'w-5 h-5'
-
-  let simleStyle = 'w-16 h-6 mt-5 border-4'
-
-  if (size === 'sm') {
-    simleStyle = 'w-[10px] h-[10px] mt-0 border-2'
+  if (typeof onClick !== undefined) {
+    hoverStyle = 'group-hover:border-white transition-all duration-200'
   }
 
-  const handleClick = () => {
-    router.push('/')
-  }
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
-
-  if (!mounted) {
-    return (
-      <div
-        className={cn('rounded-md bg-zinc-500/40 animate-pulse', avatarSize)}
-      />
-    )
+  switch (size) {
+    case 'sm':
+      boxStyle = 'w-[25px] h-[25px]'
+      leftEyeStyle = 'w-1 h-1 left-1 top-1'
+      rightEyeStyle = 'w-1 h-1 right-1 top-1'
+      mouthStyle = ' w-2/4 h-1 bottom-1 border-[3px]'
+      break
+    case 'lg':
+      boxStyle = 'w-[150px] h-[150px]'
+      leftEyeStyle = 'w-[18px] h-[18px] left-4 top-6'
+      rightEyeStyle = 'w-[18px] h-[18px] right-4 top-6'
+      mouthStyle = 'w-2/4 h-5 bottom-10 border-4'
+      break
+    default:
+      boxStyle = 'w-[80px] h-[80px]'
+      leftEyeStyle = 'w-3 h-3 left-3 top-5'
+      rightEyeStyle = 'w-3 h-3 right-3 top-5'
+      mouthStyle = ' w-2/4 h-3 bottom-5 border-[3px]'
   }
 
   return (
     <div
-      className={cn(
-        'rounded-md overflow-hidden text-center cursor-pointer border-2 border-transparent from-blue-500 to-cyan-400',
-        avatarSize,
-        size !== 'sm' && 'hover:border-white transition-all duration-200',
-      )}
-      onClick={handleClick}
+      className='flex flex-col justify-center items-center gap-2 w-fit group cursor-pointer'
+      onClick={onClick}
     >
-      {!image && (
-        <div className='w-full h-full relative bg-gradient-to-b'>
-          <div className='absolute w-3/4 px-1 top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] flex flex-col'>
-            <div className='flex justify-between'>
-              <div className={cn('bg-white rounded-full', eyeSize)} />
-              <div className={cn('bg-white rounded-full', eyeSize)} />
-            </div>
+      <div
+        className={cn(
+          'bg-gradient-to-b from-blue-500 to-cyan-400 rounded-md overflow-hidden border-2',
+          boxStyle,
+          hoverStyle,
+        )}
+      >
+        {!image && (
+          <div className='h-full w-full relative'>
+            <div
+              className={cn('absolute bg-white rounded-full', leftEyeStyle)}
+            ></div>
+            <div
+              className={cn('absolute bg-white rounded-full', rightEyeStyle)}
+            ></div>
             <div
               className={cn(
-                'self-end rounded-tl-0 rounded-tr-0 rounded-bl-[100px] rounded-br-[100px] border-transparent border-b-white',
-                simleStyle,
+                'absolute rounded-tl-0 rounded-tr-0 rounded-bl-[100px] rounded-br-[100px] border-white border-t-transparent left-[40%]',
+                mouthStyle,
               )}
-            />
+            ></div>
           </div>
+        )}
+        {image && (
+          <div className='relative h-full w-full'>
+            <Image src={image} alt={name} fill />
+          </div>
+        )}
+      </div>
+      {size === 'lg' && (
+        <div className='w-[150px] text-center'>
+          <p className='truncate text-lg'>{name}</p>
         </div>
       )}
-      {image && <Image src={image} alt={name} width={150} height={150} />}
-      {size !== 'sm' && <p className='text-md mt-4'>{name}</p>}
     </div>
   )
 }
