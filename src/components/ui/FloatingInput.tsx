@@ -24,7 +24,7 @@ export const FloatingInput: React.FC<FloatingInputProps> = React.forwardRef<
         id={id}
         placeholder=' '
         type={type}
-        className='bg-transparent w-full text-md outline-none border-none focus-visible:ring-0 focus-visible:ring-offset-0 px-4 pt-3 text-white peer'
+        className='bg-transparent w-full text-md outline-none border-none px-4 pt-3 text-white peer'
         {...props}
       />
       <label

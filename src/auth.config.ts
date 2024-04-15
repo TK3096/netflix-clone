@@ -6,14 +6,14 @@ import bcrypt from 'bcryptjs'
 
 import { loginSchema } from '@/shcemas/auth'
 
-import { getUserByEmail } from '@/lib/data/user'
+import { getUserByEmail } from '@/data/user'
 
 export default {
   providers: [
-    Github({
-      clientId: process.env.GITHUB_CLIENT_ID,
-      clientSecret: process.env.GITHUB_CLIENT_SECRET,
-    }),
+    // Github({
+    //   clientId: process.env.GITHUB_CLIENT_ID,
+    //   clientSecret: process.env.GITHUB_CLIENT_SECRET,
+    // }),
     Credentials({
       authorize: async (credentials) => {
         const validateFields = loginSchema.safeParse(credentials)
@@ -25,14 +25,11 @@ export default {
         const { email, password } = validateFields.data
         const user = await getUserByEmail(email)
 
-        if (!user || !user.hashedPassword) {
+        if (!user || !user.password) {
           return null
         }
 
-        const passwordMatch = await bcrypt.compare(
-          password,
-          user.hashedPassword,
-        )
+        const passwordMatch = await bcrypt.compare(password, user.password)
 
         if (!passwordMatch) {
           return null
