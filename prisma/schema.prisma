@@ -12,6 +12,7 @@ model User {
   name String
   image String?
   email String? @unique
+  emailVerified DateTime?
   password String?
   favoriteIds String[] @db.ObjectId
   accounts Account[]

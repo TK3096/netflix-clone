@@ -15,6 +15,14 @@ export const {
     signIn: '/auth/login',
     error: '/auth/error',
   },
+  events: {
+    linkAccount: async ({ user }) => {
+      await db.user.update({
+        where: { id: user.id },
+        data: { emailVerified: new Date() },
+      })
+    },
+  },
   callbacks: {
     async session({ session, token }) {
       if (session.user && token.sub) {
