@@ -46,7 +46,7 @@ model Movie {
   description String
   videoUrl String
   thumbnailUrl String
-  genre String[]
+  genres String[]
   duration Int
   releaseDate DateTime
   

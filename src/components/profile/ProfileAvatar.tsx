@@ -21,7 +21,7 @@ export const ProfileAvatar: React.FC<ProfileAvatarProps> = (
   let mouthStyle = ''
   let hoverStyle = ''
 
-  if (typeof onClick !== undefined) {
+  if (typeof onClick !== 'undefined') {
     hoverStyle = 'group-hover:border-white transition-all duration-200'
   }
 

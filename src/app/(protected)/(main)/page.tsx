@@ -8,7 +8,7 @@ const HomePage = () => {
   const user = useCurrentUser()
 
   return (
-    <div>
+    <div className='pt-60'>
       {JSON.stringify(user)}
       <Button onClick={() => logout()}>Logout</Button>
     </div>
