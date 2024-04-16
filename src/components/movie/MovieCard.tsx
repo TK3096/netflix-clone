@@ -17,10 +17,11 @@ interface MovieCardProps {
   movie: Movie
   isNew?: boolean
   isFavorite?: boolean
+  hideAction?: boolean
 }
 
 export const MovieCard: React.FC<MovieCardProps> = (props: MovieCardProps) => {
-  const { movie, isNew = false, isFavorite = false } = props
+  const { movie, isNew = false, isFavorite = false, hideAction = false } = props
 
   const [isPending, startTransition] = useTransition()
   const [added, setAdded] = useState(isFavorite)
@@ -70,7 +71,7 @@ export const MovieCard: React.FC<MovieCardProps> = (props: MovieCardProps) => {
             <Button size='icon' className='rounded-full w-8 h-8'>
               <FaPlay className='w-4 h-4' />
             </Button>
-            {!added && (
+            {!added && !hideAction && (
               <Button
                 onClick={handleAddFavorite}
                 size='icon'
@@ -79,7 +80,7 @@ export const MovieCard: React.FC<MovieCardProps> = (props: MovieCardProps) => {
                 <FaPlus className='w-4 h-4 text-white' />
               </Button>
             )}
-            {added && (
+            {added && !hideAction && (
               <Button
                 size='icon'
                 className='rounded-full w-8 h-8 bg-transparent border-2 bg-neutral-800 hover:bg-neutral-800'
