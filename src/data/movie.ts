@@ -1,5 +1,19 @@
 import { db } from '@/lib/db'
 
+export const getMovieById = async (id: string) => {
+  try {
+    const movie = await db.movie.findUnique({
+      where: {
+        id,
+      },
+    })
+
+    return movie
+  } catch (err) {
+    return null
+  }
+}
+
 export const getRandomMovie = async () => {
   try {
     const count = await db.movie.count()

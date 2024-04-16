@@ -7,6 +7,8 @@ import { auth } from '@/auth'
 
 import { Toaster } from '@/components/ui/sonner'
 
+import { ModalProvider } from '@/providers/ModalProvider'
+
 import { cn } from '@/lib/utils'
 
 import './globals.css'
@@ -30,6 +32,7 @@ export default async function RootLayout({
       <html lang='en'>
         <body className={cn(font.className, 'dark')}>
           {children}
+          <ModalProvider />
           <Toaster />
         </body>
       </html>

@@ -1,8 +1,12 @@
+'use client'
+
 import type { Movie } from '@prisma/client'
 
 import React from 'react'
 import { Info } from 'lucide-react'
 import { FaPlay } from 'react-icons/fa'
+
+import { useModal } from '@/hooks/useModal'
 
 import { Button } from '@/components/ui/button'
 
@@ -12,6 +16,12 @@ interface BillboardProps {
 
 export const Billboard: React.FC<BillboardProps> = (props: BillboardProps) => {
   const { movie } = props
+
+  const { onOpen } = useModal()
+
+  const handleClickMoreInfo = () => {
+    onOpen('movieInfo', { movieId: movie.id })
+  }
 
   return (
     <div className='relative h-screen md:h-[56.25vw] lg:h-[50vw]'>
@@ -39,6 +49,7 @@ export const Billboard: React.FC<BillboardProps> = (props: BillboardProps) => {
             variant='secondary'
             className='pointer mt-3 md:mt-4'
             size='sm'
+            onClick={handleClickMoreInfo}
           >
             <Info size={16} className='mr-1' /> More Info
           </Button>

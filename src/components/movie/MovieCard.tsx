@@ -54,7 +54,7 @@ export const MovieCard: React.FC<MovieCardProps> = (props: MovieCardProps) => {
           src={movie.thumbnailUrl}
           alt={movie.title}
           fill
-          objectFit='cover'
+          className='object-cover'
         />
       </div>
       <div className='absolute z-50 top-0 w-full h-[40vw] md:h-[20vw] lg:h-[12vw] invisible group-hover:visible group-hover:-translate-y-[30vw] md:group-hover:-translate-y-[14vw] lg:group-hover:-translate-y-[6vw] transition duration-200'>
@@ -63,7 +63,7 @@ export const MovieCard: React.FC<MovieCardProps> = (props: MovieCardProps) => {
             src={movie.thumbnailUrl}
             alt={movie.title}
             fill
-            objectFit='cover'
+            className='object-cover'
           />
         </div>
         <div className='px-4 py-2 space-y-2'>
