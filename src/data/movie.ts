@@ -27,6 +27,16 @@ export const getNewTrendingMovies = async () => {
   }
 }
 
+export const getMovies = async () => {
+  try {
+    const movies = await db.movie.findMany()
+
+    return movies
+  } catch {
+    return []
+  }
+}
+
 export const getFavoriteMovies = async (userId: string) => {
   try {
     const user = await db.user.findUnique({
@@ -48,5 +58,24 @@ export const getFavoriteMovies = async (userId: string) => {
     return movies
   } catch {
     return []
+  }
+}
+
+export const addFavorite = async (userId: string, movieId: string) => {
+  try {
+    await db.user.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        favoriteIds: {
+          push: movieId,
+        },
+      },
+    })
+
+    return true
+  } catch {
+    return false
   }
 }

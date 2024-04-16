@@ -1,19 +1,50 @@
+'use client'
+
 import type { Movie } from '@prisma/client'
 
-import React from 'react'
+import React, { useTransition, useState } from 'react'
 import Image from 'next/image'
-import { FaPlay, FaPlus } from 'react-icons/fa'
+import { FaPlay, FaPlus, FaCheck } from 'react-icons/fa'
 import dayjs from 'dayjs'
+import { useCurrentUser } from '@/hooks/useCurrentUser'
+
+import { addFavorite } from '@/actions/movie'
 
 import { Button } from '@/components/ui/button'
+import { toast } from 'sonner'
 
 interface MovieCardProps {
   movie: Movie
   isNew?: boolean
+  isFavorite?: boolean
 }
 
 export const MovieCard: React.FC<MovieCardProps> = (props: MovieCardProps) => {
-  const { movie, isNew } = props
+  const { movie, isNew = false, isFavorite = false } = props
+
+  const [isPending, startTransition] = useTransition()
+  const [added, setAdded] = useState(isFavorite)
+
+  const user = useCurrentUser()
+
+  const handleAddFavorite = () => {
+    startTransition(async () => {
+      try {
+        const res = await addFavorite(user?.id!, movie.id)
+
+        if (res?.error) {
+          toast.error(res.error)
+        }
+
+        if (res?.success) {
+          setAdded(true)
+          toast.success(res.success)
+        }
+      } catch (error) {
+        toast.error('Something went wrong')
+      }
+    })
+  }
 
   return (
     <div className='relative bg-zinc-900 rounded-md w-full h-[40vw] md:h-[20vw] lg:h-[12vw] group scale-100 hover:scale-125 transition duration-200 hover:z-50'>
@@ -39,12 +70,23 @@ export const MovieCard: React.FC<MovieCardProps> = (props: MovieCardProps) => {
             <Button size='icon' className='rounded-full w-8 h-8'>
               <FaPlay className='w-4 h-4' />
             </Button>
-            <Button
-              size='icon'
-              className='rounded-full w-8 h-8 bg-transparent border-2 hover:bg-zinc-500'
-            >
-              <FaPlus className='w-4 h-4 text-white' />
-            </Button>
+            {!added && (
+              <Button
+                onClick={handleAddFavorite}
+                size='icon'
+                className='rounded-full w-8 h-8 bg-transparent border-2 hover:bg-zinc-500'
+              >
+                <FaPlus className='w-4 h-4 text-white' />
+              </Button>
+            )}
+            {added && (
+              <Button
+                size='icon'
+                className='rounded-full w-8 h-8 bg-transparent border-2 bg-neutral-800 hover:bg-neutral-800'
+              >
+                <FaCheck className='w-4 h-4 text-green-400' />
+              </Button>
+            )}
           </div>
 
           <p className='text-white text-md'>

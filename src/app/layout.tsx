@@ -5,6 +5,8 @@ import { Open_Sans } from 'next/font/google'
 
 import { auth } from '@/auth'
 
+import { Toaster } from '@/components/ui/sonner'
+
 import { cn } from '@/lib/utils'
 
 import './globals.css'
@@ -26,7 +28,10 @@ export default async function RootLayout({
   return (
     <SessionProvider session={session}>
       <html lang='en'>
-        <body className={cn(font.className, 'dark')}>{children}</body>
+        <body className={cn(font.className, 'dark')}>
+          {children}
+          <Toaster />
+        </body>
       </html>
     </SessionProvider>
   )
