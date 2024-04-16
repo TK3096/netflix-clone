@@ -1,16 +1,20 @@
-'use client'
+import { Billboard } from '@/components/home/Billboard'
+import { MovieList } from '@/components/movie/MovieList'
 
-import { logout } from '@/actions/logout'
-import { Button } from '@/components/ui/button'
-import { useCurrentUser } from '@/hooks/useCurrentUser'
+import { getNewTrendingMovies, getRandomMovie } from '@/data/movie'
 
-const HomePage = () => {
-  const user = useCurrentUser()
+const HomePage = async () => {
+  const randomMovie = await getRandomMovie()
+  const trandingMovies = await getNewTrendingMovies()
+
+  if (!randomMovie || !trandingMovies) return null
 
   return (
-    <div className='pt-60'>
-      {JSON.stringify(user)}
-      <Button onClick={() => logout()}>Logout</Button>
+    <div className='h-full'>
+      <Billboard movie={randomMovie} />
+      <div className='mt-10'>
+        <MovieList title='Trending Now' movies={trandingMovies} />
+      </div>
     </div>
   )
 }

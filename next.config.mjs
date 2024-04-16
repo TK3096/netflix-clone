@@ -8,6 +8,12 @@ const nextConfig = {
         port: '',
         pathname: '/u/**',
       },
+      {
+        protocol: 'http',
+        hostname: 'commondatastorage.googleapis.com',
+        port: '',
+        pathname: '/gtv-videos-bucket/**',
+      },
     ],
   },
 }
